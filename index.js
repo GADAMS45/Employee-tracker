@@ -32,14 +32,14 @@ function viewRoles() {
         mainMenu();
     })
 }
-function viewEmployees(){
+function viewEmployees() {
     db.query("SELECT * FROM employee", function (err, results) {
         console.table(results)
         mainMenu();
     })
 }
 
-function addDepartment(){
+function addDepartment() {
     inquirer.prompt([
         {
             type: "input",
@@ -54,7 +54,7 @@ function addDepartment(){
             })
         })
 }
-function addRole(){
+function addRole() {
     inquirer.prompt([
         {
             type: "input",
@@ -79,7 +79,7 @@ function addRole(){
         })
 }
 
-function addEmployee(){
+function addEmployee() {
     inquirer.prompt([
         {
             type: "input",
@@ -109,6 +109,28 @@ function addEmployee(){
             })
         })
 
+}
+
+function updateRole() {
+    inquirer.prompt([
+
+        {
+            type: "input",
+            name: "id",
+            message: "What is the id of the employee to be updated?"
+        },
+        {
+            type: "input",
+            name: "role_id",
+            message: "What is the new role id?"
+        },
+    ])
+        .then(answers => {
+            db.query(`UPDATE employee SET role_id = ${answers.role_id} WHERE id = ${answers.id}`, function (err, results) {
+                console.log(err)
+                mainMenu()
+            })
+        })
 }
 
 
@@ -155,7 +177,7 @@ function mainMenu() {
             if (answers.input == "add a department") {
                 // INSERT INTO department (name) VALUES ("Test");
                 addDepartment()
-               
+
 
 
             }
@@ -167,9 +189,10 @@ function mainMenu() {
             }
             if (answers.input == "add an employee") {
                 addEmployee()
-          
+
             }
             if (answers.input == "update an employee role") {
+                updateRole()
 
             }
 
